@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essence - Luxury Perfume</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <nav>
+        <div class="logo">ESSENCE</div>
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+    
+    <!-- Sidebar Navigation -->
+    <div class="overlay" id="overlay"></div>
+    <div class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+    
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const navLinks = document.querySelectorAll('.sidebar-nav a');
+            
+            // Toggle sidebar function
+            function toggleSidebar() {
+                const isOpen = menuToggle.classList.toggle('open');
+                sidebar.classList.toggle('open', isOpen);
+                overlay.classList.toggle('active', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+                
+                // Add/remove event listeners based on state
+                if (isOpen) {
+                    document.addEventListener('keydown', handleEscapeKey);
+                } else {
+                    document.removeEventListener('keydown', handleEscapeKey);
+                }
+            }
+            
+            // Close sidebar when clicking outside or pressing Escape
+            function closeSidebar() {
+                menuToggle.classList.remove('open');
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', handleEscapeKey);
+            }
+            
+            // Handle Escape key press
+            function handleEscapeKey(e) {
+                if (e.key === 'Escape') {
+                    closeSidebar();
+                }
+            }
+            
+            // Event listeners
+            menuToggle.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', closeSidebar);
+            
+            // Close sidebar when clicking on a navigation link
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Only close if it's a hash link (same page navigation)
+                    if (link.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        closeSidebar();
+                        
+                        // Smooth scroll to section
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 20,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Close sidebar when window is resized to desktop view
+            function handleResize() {
+                if (window.innerWidth > 1024) {
+                    closeSidebar();
+                }
+            }
+            
+            // Add resize event listener
+            window.addEventListener('resize', handleResize);
+            
+            // Close sidebar when clicking outside
+            document.addEventListener('click', (e) => {
+                const isClickInside = sidebar.contains(e.target) || menuToggle.contains(e.target);
+                if (!isClickInside && sidebar.classList.contains('open')) {
+                    closeSidebar();
+                }
+            });
+        });
+    </script>
+
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Timeless<br>Elegance</h1>
+            <p>Experience the art of luxury fragrance. Each scent tells a story, crafted with the finest ingredients from around the world.</p>
+            <button class="cta-btn">Discover Collection</button>
+        </div>
+        <div class="perfume-bottle">
+            <div class="bottle-3d" id="bottle">
+                <img src="img/remov2.png" alt="Luxury Perfume Bottle" class="bottle-img">
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-image"><img src="img/Gemini_Generated_Image_seq3auseq3auseq3.png" alt="" width="829px" height="600px"></div>
+        <div class="about-content">
+            <h2 class="section-title">Our Story</h2>
+            <p>Founded in the heart of Paris, Essence represents the pinnacle of perfumery artistry. For over three decades, we have been crafting fragrances that capture the essence of sophistication and timeless beauty.</p>
+            <p>Each bottle is a masterpiece, blending rare ingredients with innovative techniques to create scents that transcend trends and define elegance.</p>
+            <p>Our commitment to excellence has made us the choice of connoisseurs worldwide who seek more than just fragrance – they seek an experience.</p>
+        </div>
+    </section>
+
+    <section class="products" id="products">
+        <h2>Signature Collection</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image"><img src="img/remov0.png" alt="" srcset=""></div>
+                <div class="product-info">
+                    <h3>Midnight Noir</h3>
+                    <p>A mysterious blend of black orchid and dark amber, perfect for evening sophistication.</p>
+                    <div class="price">$285</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image"><img src="img/remove4.png" alt=""></div>
+                <div class="product-info">
+                    <h3>Golden Rose</h3>
+                    <p>Delicate rose petals with hints of vanilla and sandalwood create an unforgettable aura.</p>
+                    <div class="price">$320</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image"><img src="img/ooor.png" alt="" srcset=""></div>
+                <div class="product-info">
+                    <h3>Imperial Oud</h3>
+                    <p>Rich oud wood combined with saffron and leather for a bold, luxurious statement.</p>
+                    <div class="price">$450</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image"><img src="img/remov1.png" alt="" srcset=""></div>
+                <div class="product-info">
+                    <h3>Azure Breeze</h3>
+                    <p>Fresh bergamot and sea salt capture the essence of Mediterranean summers.</p>
+                    <div class="price">$265</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image"><img src="img/remov2.png" alt="" srcset=""></div>
+                <div class="product-info">
+                    <h3>White Jasmine</h3>
+                    <p>Pure jasmine blooms with undertones of white musk create ethereal elegance.</p>
+                    <div class="price">$295</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image"><img src="img/remove2.png" alt=""></div>
+                <div class="product-info">
+                    <h3>Royal Amber</h3>
+                    <p>Warm amber and precious resins evoke the opulence of ancient kingdoms.</p>
+                    <div class="price">$380</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <h2>Get in Touch</h2>
+            <p>Experience our collection in person or inquire about custom fragrances</p>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea placeholder="Tell us about your fragrance preferences..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Essence Luxury Perfume. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero animations
+        gsap.from('.hero-content h1', {
+            duration: 1.2,
+            y: 100,
+            opacity: 0,
+            ease: 'power4.out'
+        });
+
+        gsap.from('.hero-content p', {
+            duration: 1.2,
+            y: 50,
+            opacity: 0,
+            delay: 0.3,
+            ease: 'power4.out'
+        });
+
+        gsap.from('.cta-btn', {
+            duration: 1.2,
+            y: 30,
+            opacity: 0,
+            delay: 0.6,
+            ease: 'power4.out'
+        });
+
+        gsap.from('.bottle-3d', {
+            duration: 1.5,
+            scale: 0.8,
+            opacity: 0,
+            rotation: 180,
+            delay: 0.4,
+            ease: 'elastic.out(1, 0.5)'
+        });
+
+        // 3D bottle rotation on mouse move
+        const bottle = document.getElementById('bottle');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            bottle.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+        });
+
+        // About section animations
+        gsap.from('.about-image', {
+            scrollTrigger: {
+                trigger: '.about',
+                start: 'top 70%',
+            },
+            duration: 1.2,
+            x: -100,
+            opacity: 0,
+            ease: 'power4.out'
+        });
+
+        gsap.from('.about-content', {
+            scrollTrigger: {
+                trigger: '.about',
+                start: 'top 70%',
+            },
+            duration: 1.2,
+            x: 100,
+            opacity: 0,
+            ease: 'power4.out'
+        });
+
+        // Product cards animations
+        gsap.utils.toArray('.product-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 85%',
+                },
+                duration: 0.8,
+                y: 100,
+                opacity: 0,
+                delay: index * 0.1,
+                ease: 'power3.out'
+            });
+        });
+
+        // Contact form animation
+        gsap.from('.contact-container', {
+            scrollTrigger: {
+                trigger: '.contact',
+                start: 'top 70%',
+            },
+            duration: 1,
+            y: 80,
+            opacity: 0,
+            ease: 'power4.out'
+        });
+
+        // Background color transitions on scroll
+        gsap.to('.animated-bg', {
+            scrollTrigger: {
+                trigger: '.about',
+                start: 'top center',
+                end: 'bottom center',
+                scrub: true,
+            },
+            background: 'linear-gradient(135deg, #e8dfd0, #f0e8d8, #c59d5f, #d4af78)',
+            backgroundSize: '400% 400%'
+        });
+
+        // Particles generation
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will contact you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
